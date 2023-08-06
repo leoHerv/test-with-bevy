@@ -118,7 +118,15 @@ pub fn change_enemy_direction(
             {
                 sound_effect_2
             };
-            audio.play(sound_effect);
+
+            let playback_settings = PlaybackSettings {
+                repeat: false,
+                volume: 0.01,
+                speed: 1.0,
+            };
+            audio.play_with_settings(sound_effect.clone(), playback_settings);
+
+            //audio.play(sound_effect);
         }
     }
 }
