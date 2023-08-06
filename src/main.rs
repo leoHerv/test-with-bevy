@@ -1,3 +1,4 @@
+use bevy::app::AppExit;
 use bevy::prelude::*;
 use bevy::window::PrimaryWindow;
 use rand::prelude::*;
@@ -16,8 +17,10 @@ fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
         .init_resource::<Score>()
+        .init_resource::<HighScores>()
         .init_resource::<StarSpawnTimer>()
         .init_resource::<EnemySpawnTimer>()
+        .add_event::<GameOver>()
         .add_startup_system(spawn_player)
         .add_startup_system(spawn_camera)
         .add_startup_system(spawn_enemies)
@@ -34,6 +37,9 @@ fn main() {
         .add_system(spawn_stars_over_time)
         .add_system(tick_enemy_spawn_timer)
         .add_system(spawn_enemies_over_time)
+        .add_system(exit_game)
+        .add_system(handle_game_over)
+        .add_system(udpate_high_scores)
         .run();
 }
 
@@ -95,6 +101,24 @@ impl Default for EnemySpawnTimer
     fn default() -> Self {
         EnemySpawnTimer {timer: Timer::from_seconds(ENEMY_SPAWN_TIME, TimerMode::Repeating)}
     }
+}
+
+#[derive(Resource)]
+pub struct HighScores
+{
+    pub scores: Vec<(String, u32)>,
+}
+
+impl Default for HighScores
+{
+    fn default() -> Self {
+        HighScores {scores: Vec::new()}
+    }
+}
+
+pub struct GameOver
+{
+    pub score: u32,
 }
 
 // System : to spawn a player in the game
@@ -406,10 +430,12 @@ pub fn limit_enemy_movement(
 
 pub fn enemy_hit_player(
     mut commands: Commands,
+    mut game_over_event_writer: EventWriter<GameOver>,
     mut player_query: Query<(Entity, &Transform), With<Player>>,
     enemy_query: Query<&Transform, With<Enemy>>,
     asset_server: Res<AssetServer>,
     audio: Res<Audio>,
+    score: Res<Score>,
 )
 {
     if let Ok((player_entity, player_transform)) = player_query.get_single_mut()
@@ -427,6 +453,7 @@ pub fn enemy_hit_player(
                 let sound_effect = asset_server.load("audio/explosionCrunch_000.ogg");
                 audio.play(sound_effect);
                 commands.entity(player_entity).despawn();
+                game_over_event_writer.send(GameOver{score: score.value});
             }
 
         }
@@ -559,5 +586,37 @@ pub fn spawn_enemies_over_time(
             },
             Enemy{direction: Vec2::new(enemy_x, enemy_y).normalize()},
         ));
+    }
+}
+
+pub fn exit_game(
+    keyboard_input: Res<Input<KeyCode>>,
+    mut app_exit_event_writer: EventWriter<AppExit>,
+)
+{
+    if keyboard_input.pressed(KeyCode::Escape)
+    {
+        app_exit_event_writer.send(AppExit);
+    }
+}
+
+pub fn handle_game_over(
+    mut game_over_event_reader: EventReader<GameOver>,
+)
+{
+    for event in game_over_event_reader.iter()
+    {
+        println!("Your final score is: {}", event.score.to_string());
+    }
+}
+
+pub fn udpate_high_scores(
+    mut game_over_event_reader: EventReader<GameOver>,
+    mut high_scores: ResMut<HighScores>,
+)
+{
+    for event in game_over_event_reader.iter()
+    {
+        high_scores.scores.push(("Player".to_string(), event.score));
     }
 }
