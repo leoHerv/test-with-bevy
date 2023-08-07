@@ -16,7 +16,7 @@ impl Default for Score
 }
 
 // To have the list of the different scores.
-#[derive(Resource)]
+#[derive(Resource, Debug)]
 pub struct HighScores
 {
     pub scores: Vec<(String, u32)>,

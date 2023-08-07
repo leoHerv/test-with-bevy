@@ -3,6 +3,21 @@ use bevy::prelude::*;
 use super::resources::*;
 use crate::events::*;
 
+
+pub fn insert_score(
+    mut commands: Commands,
+)
+{
+    commands.insert_resource(Score::default());
+}
+
+pub fn remove_score(
+    mut commands: Commands,
+)
+{
+    commands.remove_resource::<Score>();
+}
+
 pub fn update_score(
     score: Res<Score>
 )
@@ -21,5 +36,13 @@ pub fn udpate_high_scores(
     for event in game_over_event_reader.iter()
     {
         high_scores.scores.push(("Player".to_string(), event.score));
+    }
+}
+
+pub fn high_scores_updated(high_scores: Res<HighScores>)
+{
+    if high_scores.is_changed()
+    {
+        println!("High score list : {:?}", high_scores);
     }
 }

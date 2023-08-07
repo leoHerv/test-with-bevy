@@ -29,6 +29,18 @@ pub fn spawn_player(
     ));
 }
 
+// System : to despawn the player
+pub fn despawn_players(
+    mut commands: Commands,
+    players_query: Query<Entity, With<Player>>,
+)
+{
+    for player in players_query.iter()
+    {
+        commands.entity(player).despawn();
+    }
+}
+
 // System : to move the player
 pub fn player_movement(
     keyboard_input: Res<Input<KeyCode>>,
