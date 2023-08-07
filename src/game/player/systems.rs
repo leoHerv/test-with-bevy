@@ -4,11 +4,11 @@ use bevy::window::PrimaryWindow;
 use super::*;
 use super::components::*;
 use crate::events::GameOver;
-use crate::enemy::components::*;
-use crate::enemy::*;
-use crate::score::resources::*;
-use crate::star::*;
-use crate::star::components::*;
+use crate::game::enemy::components::*;
+use crate::game::enemy::*;
+use crate::game::score::resources::*;
+use crate::game::star::*;
+use crate::game::star::components::*;
 
 // System : to spawn a player in the game
 pub fn spawn_player(

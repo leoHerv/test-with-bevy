@@ -6,7 +6,7 @@ use rand::prelude::*;
 use super::components::*;
 use super::resources::*;
 use super::*;
-use crate::player::*;
+use crate::game::player::*;
 
 // System : to spawn a enemies in the game
 pub fn spawn_enemies(
