@@ -24,15 +24,16 @@ impl Plugin for PlayerPlugin
         .add_system(spawn_player.in_schedule(OnEnter(AppState::Game)))
         // Systems
         //.add_system(player_movement)
-        .add_system(limit_player_movement
+        /*.add_system(limit_player_movement
             .after(player_movement)
             .run_if(in_state(AppState::Game))
-            .run_if(in_state(SimulationState::Running)))
+            .run_if(in_state(SimulationState::Running)))*/
         //.add_system(enemy_hit_player)
         //.add_system(player_hit_star)
         .add_systems(
             (
                 player_movement,
+                limit_player_movement.after(player_movement),
                 enemy_hit_player,
                 player_hit_star,
             )

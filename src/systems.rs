@@ -73,14 +73,19 @@ pub fn exit_game(
 }
 
 pub fn handle_game_over(
-    mut commands: Commands,
+    //mut commands: Commands,
     mut game_over_event_reader: EventReader<GameOver>,
+    mut next_app_state: ResMut<NextState<AppState>>,
+    mut next_simulation_state: ResMut<NextState<SimulationState>>,
 )
 {
     for event in game_over_event_reader.iter()
     {
         println!("Your final score is: {}", event.score.to_string());
-        commands.insert_resource(NextState(Some(AppState::GameOver)));
-        commands.insert_resource(NextState(Some(SimulationState::Paused)));
+        //commands.insert_resource(NextState(Some(AppState::GameOver)));
+        //commands.insert_resource(NextState(Some(SimulationState::Paused)));
+        // Better
+        next_app_state.set(AppState::GameOver);
+        next_simulation_state.set(SimulationState::Paused);
     }   
 }
