@@ -1,8 +1,8 @@
 use bevy::prelude::*;
 use bevy::app::AppExit;
 
-use crate::main_menu::components::*;
-use crate::main_menu::styles::*;
+use crate::ui::main_menu::components::*;
+use crate::ui::main_menu::styles::*;
 
 use crate::*;
 

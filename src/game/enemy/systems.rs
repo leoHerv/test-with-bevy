@@ -7,6 +7,7 @@ use super::components::*;
 use super::resources::*;
 use super::*;
 use crate::game::player::*;
+use crate::game::enemies_number::resources::*;
 
 // System : to spawn a enemies in the game
 pub fn spawn_enemies(
@@ -199,6 +200,7 @@ pub fn spawn_enemies_over_time(
     window_query: Query<&Window, With<PrimaryWindow>>,
     asset_server: Res<AssetServer>,
     enemy_spawn_timer: Res<EnemySpawnTimer>,
+    mut enemies_number: ResMut<EnemiesNumber>,
 )
 {
     if enemy_spawn_timer.timer.finished()
@@ -236,5 +238,7 @@ pub fn spawn_enemies_over_time(
             },
             Enemy{direction: Vec2::new(enemy_x, enemy_y).normalize()},
         ));
+
+        enemies_number.value += 1;
     }
 }

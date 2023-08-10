@@ -5,6 +5,7 @@ pub mod player;
 pub mod score;
 pub mod star;
 pub mod systems;
+pub mod enemies_number;
 
 use crate::events::*;
 
@@ -13,6 +14,7 @@ use player::PlayerPlugin;
 use score::ScorePlugin;
 use star::StarPlugin;
 use systems::*;
+use enemies_number::EnemiesNumberPlugin;
 
 use crate::AppState;
 
@@ -32,6 +34,7 @@ impl Plugin for GamePlugin
         .add_plugin(PlayerPlugin)
         .add_plugin(ScorePlugin)
         .add_plugin(StarPlugin)
+        .add_plugin(EnemiesNumberPlugin)
         // Systems
         .add_system(toggle_simulation.run_if(in_state(AppState::Game)));
     }

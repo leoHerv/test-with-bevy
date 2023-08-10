@@ -19,7 +19,7 @@ pub fn remove_score(
 }
 
 pub fn update_score(
-    score: Res<Score>
+    score: Res<Score>,
 )
 {
     if score.is_changed()

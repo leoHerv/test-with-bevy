@@ -1,10 +1,10 @@
 pub mod events;
 mod systems;
 mod game;
-mod main_menu;
+mod ui;
 
 use game::GamePlugin;
-use main_menu::MainMenuPlugin;
+use ui::{main_menu::MainMenuPlugin, game_overlay::GameOverlayPlugin};
 
 use systems::*;
 
@@ -19,6 +19,7 @@ fn main() {
     // Plugins
     .add_plugin(GamePlugin)
     .add_plugin(MainMenuPlugin)
+    .add_plugin(GameOverlayPlugin)
     // Startup Systems
     .add_startup_system(spawn_camera)
     // Systems
