@@ -33,7 +33,7 @@ pub fn build_game_overlay(
         (NodeBundle
         {
             style: GAME_STYLE,
-            background_color: Color::RED.into(),
+            //background_color: Color::RED.into(),
             ..default()
         },
         GameOverlay{},
@@ -43,42 +43,108 @@ pub fn build_game_overlay(
     {
         // === Score ===
         parent.spawn(
-            TextBundle
+            NodeBundle
             {
-                text: Text
+                style: NODE_STYLE,
+                background_color: Color::BLUE.into(),
+                ..default()
+            },
+        ).with_children(|parent| 
+        {
+            parent.spawn(
+                TextBundle
                 {
-                    sections: vec![
-                        TextSection::new(
-                            "Score : ", 
-                            get_label_text_style(&asset_server)
-                        )
-                    ],
-                    alignment: TextAlignment::Center,
+                    text: Text
+                    {
+                        sections: vec![
+                            TextSection::new(
+                                "Score : ", 
+                                get_label_text_style(&asset_server)
+                            )
+                        ],
+                        alignment: TextAlignment::Center,
+                        ..default()
+                    },
+                    background_color: Color::BLACK.into(),
+                    ..default()
+                }
+            );
+
+            parent.spawn(
+                (
+                TextBundle
+                {
+                    text: Text
+                    {
+                        sections: vec![
+                            TextSection::new(
+                                "0", 
+                                get_label_text_style(&asset_server)
+                            )
+                        ],
+                        alignment: TextAlignment::Center,
+                        ..default()
+                    },
+                    background_color: Color::BLACK.into(),
                     ..default()
                 },
-                background_color: Color::BLACK.into(),
-                ..default()
-            }
+                ScoreLabel {},
+            )
+            );
+        }
         );
 
         // === Enemies Number ===
         parent.spawn(
-            TextBundle
+            NodeBundle
             {
-                text: Text
+                style: NODE_STYLE,
+                background_color: Color::BLUE.into(),
+                ..default()
+            },
+        ).with_children(|parent| 
+        {
+            parent.spawn(
+                TextBundle
                 {
-                    sections: vec![
-                        TextSection::new(
-                            "Enemies : ", 
-                            get_label_text_style(&asset_server)
-                        )
-                    ],
-                    alignment: TextAlignment::Center,
+                    text: Text
+                    {
+                        sections: vec![
+                            TextSection::new(
+                                "Enemies : ", 
+                                get_label_text_style(&asset_server)
+                            )
+                        ],
+                        alignment: TextAlignment::Center,
+                        ..default()
+                    },
+                    background_color: Color::BLACK.into(),
+                    ..default()
+                }
+            );
+
+            parent.spawn(
+                (
+                TextBundle
+                {
+                    text: Text
+                    {
+                        sections: vec![
+                            TextSection::new(
+                                "4", 
+                                get_label_text_style(&asset_server)
+                            )
+                        ],
+                        alignment: TextAlignment::Center,
+                        ..default()
+                    },
+                    background_color: Color::BLACK.into(),
                     ..default()
                 },
-                background_color: Color::BLACK.into(),
-                ..default()
-            }
+                EnemiesNumberLabel {},
+            )
+            );
+        }
         );
 
     })
