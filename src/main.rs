@@ -13,7 +13,30 @@ use bevy::prelude::*;
 fn main() {
     App::new()
     // Bevy Plugins
-    .add_plugins(DefaultPlugins)
+    .add_plugins(DefaultPlugins.set(
+        WindowPlugin 
+        {
+            primary_window: Some(Window 
+                {
+                    title: "Bevy Ball Game !".into(),
+                    resolution: (1280., 720.).into(),
+                    
+                    resize_constraints: WindowResizeConstraints
+                    {
+                        min_width: 1280.,
+                        min_height: 720.,
+                        max_width: 1280.,
+                        max_height: 720.,
+                    },
+                    
+                    decorations: true,
+                    resizable: false,
+                    ..default()
+            }),
+            ..default()
+        }
+    ))
+
     // States
     .add_state::<AppState>()
     // Plugins

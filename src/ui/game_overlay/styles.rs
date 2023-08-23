@@ -1,5 +1,7 @@
 use bevy::prelude::*;
 
+pub const NODE_COLOR: Color = Color::rgba(0.25, 0.25, 0.25, 0.50);
+
 pub const GAME_STYLE : Style = Style 
 { 
     flex_direction: FlexDirection::Row,
@@ -21,7 +23,7 @@ pub const NODE_STYLE : Style = Style
     flex_direction: FlexDirection::Row,
     justify_content: JustifyContent::Center,
     align_items: AlignItems::Center,
-    size: Size::new(Val::Percent(15.0), Val::Px(100.0)),
+    size: Size::new(Val::Percent(10.0), Val::Px(80.0)),
     ..Style::DEFAULT
 };
 
@@ -43,3 +45,15 @@ pub fn get_label_text_style(asset_server: &Res<AssetServer>) -> TextStyle
         color: Color::WHITE
     }
 }
+
+pub const IMAGE_STYLE : Style = Style
+{
+    size: Size::new(Val::Px(32.0), Val::Px(32.0)),
+    margin: UiRect::new(
+                Val::Px(8.0), 
+                Val::Px(8.0), 
+                Val::Px(8.0),
+                Val::Px(8.0),
+    ),
+    ..Style::DEFAULT
+};

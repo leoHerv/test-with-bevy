@@ -46,26 +46,16 @@ pub fn build_game_overlay(
             NodeBundle
             {
                 style: NODE_STYLE,
-                background_color: Color::BLUE.into(),
+                background_color: NODE_COLOR.into(),
                 ..default()
             },
         ).with_children(|parent| 
         {
             parent.spawn(
-                TextBundle
+                ImageBundle 
                 {
-                    text: Text
-                    {
-                        sections: vec![
-                            TextSection::new(
-                                "Score : ", 
-                                get_label_text_style(&asset_server)
-                            )
-                        ],
-                        alignment: TextAlignment::Center,
-                        ..default()
-                    },
-                    background_color: Color::BLACK.into(),
+                    style: IMAGE_STYLE,
+                    image: asset_server.load("sprites/star.png").into(),
                     ..default()
                 }
             );
@@ -85,7 +75,6 @@ pub fn build_game_overlay(
                         alignment: TextAlignment::Center,
                         ..default()
                     },
-                    background_color: Color::BLACK.into(),
                     ..default()
                 },
                 ScoreLabel {},
@@ -99,26 +88,16 @@ pub fn build_game_overlay(
             NodeBundle
             {
                 style: NODE_STYLE,
-                background_color: Color::BLUE.into(),
+                background_color: NODE_COLOR.into(),
                 ..default()
             },
         ).with_children(|parent| 
         {
             parent.spawn(
-                TextBundle
+                ImageBundle 
                 {
-                    text: Text
-                    {
-                        sections: vec![
-                            TextSection::new(
-                                "Enemies : ", 
-                                get_label_text_style(&asset_server)
-                            )
-                        ],
-                        alignment: TextAlignment::Center,
-                        ..default()
-                    },
-                    background_color: Color::BLACK.into(),
+                    style: IMAGE_STYLE,
+                    image: asset_server.load("sprites/ball_red_large.png").into(),
                     ..default()
                 }
             );
@@ -138,7 +117,6 @@ pub fn build_game_overlay(
                         alignment: TextAlignment::Center,
                         ..default()
                     },
-                    background_color: Color::BLACK.into(),
                     ..default()
                 },
                 EnemiesNumberLabel {},
