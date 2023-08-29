@@ -28,3 +28,20 @@ impl Default for HighScores
         HighScores {scores: Vec::new()}
     }
 }
+
+impl HighScores
+{
+    pub fn sort(&mut self){
+        self.scores.sort_by(|a, b| b.1.cmp(&a.1));
+    }
+
+    pub fn get_best_score(&mut self) -> u32
+    {
+        self.sort();
+        if self.scores.len() != 0
+        {
+            return self.scores[0].1
+        }
+        return 0;
+    }
+}

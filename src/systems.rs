@@ -55,7 +55,7 @@ pub fn transition_to_main_menu_state(
             //commands.insert_resource(NextState(Some(SimulationState::Paused)));
             // Better
             next_app_state.set(AppState::MainMenu);
-            next_simulation_state.set(SimulationState::Paused);
+            next_simulation_state.set(SimulationState::Running);
             println!("Entered AppState::MainMenu");
         }
     }
@@ -81,11 +81,11 @@ pub fn handle_game_over(
 {
     for event in game_over_event_reader.iter()
     {
-        println!("Your final score is: {}", event.score.to_string());
+        println!("------Your final score is: {}", event.score.to_string());
         //commands.insert_resource(NextState(Some(AppState::GameOver)));
         //commands.insert_resource(NextState(Some(SimulationState::Paused)));
         // Better
         next_app_state.set(AppState::GameOver);
-        next_simulation_state.set(SimulationState::Paused);
+        next_simulation_state.set(SimulationState::Running);
     }   
 }

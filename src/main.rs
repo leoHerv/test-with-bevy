@@ -7,6 +7,7 @@ use game::GamePlugin;
 use ui::main_menu::MainMenuPlugin;
 use ui::game_overlay::GameOverlayPlugin;
 use ui::game_pause::GamePausePlugin;
+use ui::game_game_over::GameGameOverPlugin;
 
 
 use systems::*;
@@ -47,6 +48,7 @@ fn main() {
     .add_plugin(MainMenuPlugin)
     .add_plugin(GameOverlayPlugin)
     .add_plugin(GamePausePlugin)
+    .add_plugin(GameGameOverPlugin)
     // Startup Systems
     .add_startup_system(spawn_camera)
     // Systems

@@ -134,6 +134,7 @@ pub fn enemy_hit_player(
     asset_server: Res<AssetServer>,
     audio: Res<Audio>,
     score: Res<Score>,
+    mut high_score: ResMut<HighScores>,
 )
 {
     if let Ok((player_entity, player_transform)) = player_query.get_single_mut()
@@ -151,9 +152,14 @@ pub fn enemy_hit_player(
                 let sound_effect = asset_server.load("audio/explosionCrunch_000.ogg");
                 audio.play(sound_effect);
                 commands.entity(player_entity).despawn();
-                game_over_event_writer.send(GameOver{score: score.value});
+                let old_high_score_value = high_score.get_best_score();
+                game_over_event_writer.send(
+                    GameOver{
+                        score: score.value, 
+                        best_score: if old_high_score_value > score.value {old_high_score_value} else {score.value},
+                });
+                println!("Send!");
             }
-
         }
     }
 }
